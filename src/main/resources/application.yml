@@ -1,0 +1,36 @@
+#app:
+#  name: My app
+#  description: Welcome to ${app.name}
+#
+#my:
+#  greeting: Hello World
+#  list:
+#    values: One, Two, Three
+#db:
+#  connection: connection-string-here
+#  host: 127.0.0.1
+#  port: 1200
+#
+#  managment.endpoint.web.exposure.include: "*"
+#
+#spring:
+#  h2:
+#    console:
+#      enabled: true
+
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/test_db
+    username: root
+    password: root
+    driverClassName: org.postgresql.Driver
+
