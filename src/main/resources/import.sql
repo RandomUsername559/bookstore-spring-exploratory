@@ -1,3 +1,4 @@
-insert into book values(1, 'The Tartar Steppe');
-insert into book values(2, 'Poem Strip');
-insert into book values(3, 'Restless Nights: Selected Stories of Dino Buzzati');
+--insert into libraryy values(nextval('libraryy_id_seq'), 'The Tartar Steppe','a');
+--insert into libraryy values(444, 'Poem Strip','b');
+--insert into libraryy values(nextval('libraryy_id_seq'), 'Restless Nights: Selected Stories of Dino Buzzati','c');
+--insert into libraryy2 values(nextval('hibernate_sequence'), 'Restless Nights: Selected Stories of Dino Buzzati','c');

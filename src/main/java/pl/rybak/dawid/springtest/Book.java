@@ -1,51 +1,50 @@
 package pl.rybak.dawid.springtest;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
+import javax.persistence.*;
+import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
-public class Book {
+@Table(name = "Library")
+public class Book implements Serializable {
 
+    //    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
+//    @SequenceGenerator(
+//            name = "sequence-generator",
+//            sequenceName = "book_sequence",
+//            allocationSize = 10,
+//            initialValue = 444
+//    )
+//    @Convert(converter = IdConverter.class)
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @GenericGenerator(
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
+    @SequenceGenerator(
             name = "sequence-generator",
-            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = {
-                    @Parameter(name = "sequence_name", value = "book_sequence"),
-                    @Parameter(name = "initial_value", value = "1"),
-                    @Parameter(name = "increment_size", value = "1")
-            }
+            sequenceName = "book_sequence",
+            allocationSize = 10
     )
     private Long id;
-    private String name;
+
+    @Embedded
+    private Title title;
+    @Embedded
+    private Author author;
 
     public Book() {
     }
 
-    public Book(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    public Book(Title name, Author author) {
+        this.title = name;
+        this.author = author;
     }
 
-    public Long getId() {
-        return id;
+    public void setTitle(Title title) {
+        this.title = title;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public BookId getId() {
+        return BookId.of(id);
     }
 }

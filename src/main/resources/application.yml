@@ -34,3 +34,11 @@ spring:
     password: root
     driverClassName: org.postgresql.Driver
 
+logging:
+  level:
+    org:
+      springframework:
+        orm.jpa: DEBUG
+        transaction: DEBUG
+      hibernate:
+        type: trace
