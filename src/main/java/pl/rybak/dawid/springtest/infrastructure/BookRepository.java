@@ -12,4 +12,10 @@ public interface BookRepository {
     List<Book> findAll();
 
     Book save(Book book);
+
+    void delete(BookId bookId);
+
+    void update(Book book);
+
+    Book findExisting(BookId bookId);
 }

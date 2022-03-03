@@ -25,6 +25,7 @@ public class Book implements Serializable {
             sequenceName = "book_sequence",
             allocationSize = 10
     )
+
     private Long id;
 
     @Embedded
@@ -44,7 +45,20 @@ public class Book implements Serializable {
         this.title = title;
     }
 
-    public BookId getId() {
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public BookId getBookId() {
         return BookId.of(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title=" + title +
+                ", author=" + author +
+                '}';
     }
 }

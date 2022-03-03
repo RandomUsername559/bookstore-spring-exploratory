@@ -35,4 +35,11 @@ public class Author {
     public int hashCode() {
         return Objects.hash(author);
     }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "author='" + author + '\'' +
+                '}';
+    }
 }

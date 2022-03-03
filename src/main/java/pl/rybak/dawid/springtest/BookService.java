@@ -33,11 +33,22 @@ public class BookService {
     }
 
     public BookId save(Author authorName, Title title) {
-        Book book = bookRepository.save(new Book(title,authorName));
-        return book.getId();
+        Book book = bookRepository.save(new Book(title, authorName));
+        return book.getBookId();
     }
 
     public Book findExisting(BookId bookId) {
-        return bookRepository.find(bookId).orElseThrow();
+        return bookRepository.findExisting(bookId);
+    }
+
+    public void delete(BookId bookId) {
+        bookRepository.delete(bookId);
+    }
+
+    public void update(BookId bookId, BookDto bookDto) {
+        Book book = bookRepository.findExisting(bookId);
+        book.setAuthor(bookDto.getAuthor());
+        book.setTitle(bookDto.getTitle());
+        bookRepository.update(book);
     }
 }

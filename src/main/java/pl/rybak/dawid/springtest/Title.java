@@ -20,6 +20,7 @@ public class Title {
         return new Title(title);
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,5 +32,10 @@ public class Title {
     @Override
     public int hashCode() {
         return Objects.hash(title);
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

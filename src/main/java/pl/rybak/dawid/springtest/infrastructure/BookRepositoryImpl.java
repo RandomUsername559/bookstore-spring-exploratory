@@ -31,4 +31,19 @@ public class BookRepositoryImpl implements BookRepository {
         return bookJpaRepository.save(book);
     }
 
+    @Override
+    public void delete(BookId bookId) {
+        bookJpaRepository.deleteById(bookId.getAsLong());
+    }
+
+    @Override
+    public void update(Book book) {
+        bookJpaRepository.save(book);
+    }
+
+    @Override
+    public Book findExisting(BookId bookId) {
+        return find(bookId).orElseThrow();
+    }
+
 }
