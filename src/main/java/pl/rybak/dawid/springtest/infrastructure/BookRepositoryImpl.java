@@ -45,5 +45,4 @@ public class BookRepositoryImpl implements BookRepository {
     public Book findExisting(BookId bookId) {
         return find(bookId).orElseThrow();
     }
-
 }

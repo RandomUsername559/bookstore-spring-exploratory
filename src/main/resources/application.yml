@@ -39,6 +39,9 @@ logging:
     org:
       springframework:
         orm.jpa: DEBUG
+        jdbc:
+          core: TRACE
         transaction: DEBUG
-      hibernate:
-        type: trace
+    hibernate:
+      type: trace
+

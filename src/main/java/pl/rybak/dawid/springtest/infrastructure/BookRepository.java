@@ -18,4 +18,5 @@ public interface BookRepository {
     void update(Book book);
 
     Book findExisting(BookId bookId);
+
 }

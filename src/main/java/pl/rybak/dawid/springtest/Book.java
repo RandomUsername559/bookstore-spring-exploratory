@@ -1,14 +1,16 @@
 package pl.rybak.dawid.springtest;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
 @Table(name = "Library")
-public class Book implements Serializable {
+public class Book {
 
-    //    @Id
+    //        @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
 //    @SequenceGenerator(
@@ -27,26 +29,37 @@ public class Book implements Serializable {
     )
 
     private Long id;
-
-    @Embedded
-    private Title title;
     @Embedded
     private Author author;
 
-    public Book() {
+    @Embedded
+    private Title title;
+
+
+    @OneToMany(
+            mappedBy = "book",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Chapter> chapters = new HashSet<>();
+
+    private Book() {
     }
 
-    public Book(Title name, Author author) {
-        this.title = name;
+    public Book(Author author, Title title, List<Chapter> chapters) {
+        this.author = author;
+        this.title = title;
+        this.chapters = new HashSet<>(chapters);
+        this.chapters.forEach(chapter -> chapter.setBook(this));
+    }
+
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
     public void setTitle(Title title) {
         this.title = title;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
     }
 
     public BookId getBookId() {
@@ -57,8 +70,10 @@ public class Book implements Serializable {
     public String toString() {
         return "Book{" +
                 "id=" + id +
-                ", title=" + title +
                 ", author=" + author +
+                ", title=" + title +
+                ", chapters=" + chapters +
                 '}';
     }
+
 }
