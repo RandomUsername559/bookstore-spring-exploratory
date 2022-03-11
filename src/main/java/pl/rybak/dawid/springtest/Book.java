@@ -2,7 +2,7 @@ package pl.rybak.dawid.springtest;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -44,14 +44,28 @@ public class Book {
     )
     private Set<Chapter> chapters = new HashSet<>();
 
+
     private Book() {
     }
 
-    public Book(Author author, Title title, List<Chapter> chapters) {
+    @ManyToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinTable(
+            name = "book_publisher",
+            joinColumns = @JoinColumn(name = "publisher_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private Set<Publisher> publishers = new HashSet<>();
+
+
+    public Book(Author author, Title title, Set<Chapter> chapters, Set<Publisher> publishers) {
         this.author = author;
         this.title = title;
-        this.chapters = new HashSet<>(chapters);
+        this.chapters = chapters;
         this.chapters.forEach(chapter -> chapter.setBook(this));
+        this.publishers = publishers;
     }
 
     public void setAuthor(Author author) {
@@ -76,4 +90,16 @@ public class Book {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(id, book.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

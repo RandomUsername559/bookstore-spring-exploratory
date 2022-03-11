@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.rybak.dawid.springtest.infrastructure.BookRepository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,12 +61,24 @@ public class BookService {
     }
 
     private Book createBook(BookDto bookDto) {
-        return new Book(bookDto.getAuthor(), bookDto.getTitle(), createChapters(bookDto.getChapterDtoList()));
+        Set<Publisher> publishers = createPublisher(bookDto.getPublisherDtoSet());
+        Book book = new Book(bookDto.getAuthor(), bookDto.getTitle(),
+                createChapters(bookDto.getChapterDtoSet()),
+                publishers
+        );
+        publishers.forEach(publisher -> publisher.addBook(book));
+        return book;
     }
 
-    private List<Chapter> createChapters(List<ChapterDto> chapterDtoList) {
-        return chapterDtoList.stream()
+    private Set<Chapter> createChapters(Set<ChapterDto> chapterDtoSet) {
+        return chapterDtoSet.stream()
                 .map(dto -> new Chapter(dto.getChapterName(), dto.getPage()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
+    }
+
+    private Set<Publisher> createPublisher(Set<PublisherDto> publisherDtoSet) {
+        return publisherDtoSet.stream()
+                .map(dto -> new Publisher(dto.getPublisherName(), new HashSet<>()))
+                .collect(Collectors.toSet());
     }
 }

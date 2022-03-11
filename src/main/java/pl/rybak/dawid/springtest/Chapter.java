@@ -1,6 +1,7 @@
 package pl.rybak.dawid.springtest;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 @Entity
@@ -53,4 +54,16 @@ public class Chapter {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Chapter chapter = (Chapter) o;
+        return Objects.equals(id, chapter.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 public class BookServiceUnitTest {
@@ -41,7 +43,7 @@ public class BookServiceUnitTest {
     void shouldIncreaseSizeOfTotalBooksByAddingBook() {
 
         // GIVEN && WHEN
-        BookDto bookDto = new BookDto(Author.of("Oda"), Title.of("One Piece"), List.of());
+        BookDto bookDto = new BookDto(Author.of("Oda"), Title.of("One Piece"), Set.of(), Set.of());
         bookService.save(bookDto);
 
         // THEN
@@ -52,12 +54,12 @@ public class BookServiceUnitTest {
     void shouldSaveAllFieldsOfBook() {
 
         // GIVEN && WHEN
-        BookDto bookDto = new BookDto(Author.of("Oda"), Title.of("One Piece"), List.of());
+        BookDto bookDto = new BookDto(Author.of("Oda"), Title.of("One Piece"), Set.of(), Set.of());
         BookId bookId = bookService.save(bookDto);
 
         // THEN
         Book actualBook = bookService.findExisting(bookId);
-        Book expectedBookDto = new Book(Author.of("Oda"), Title.of("One Piece"), List.of());
+        Book expectedBookDto = new Book(Author.of("Oda"), Title.of("One Piece"), Set.of(), Set.of());
         Assertions.assertThat(actualBook.getBookId()).isNotNull();
         assertAreEqual(actualBook, expectedBookDto);
     }
@@ -67,7 +69,7 @@ public class BookServiceUnitTest {
     void shouldDecreaseSizeOfTotalBooksByDeletingBook() {
 
         //GIVEN
-        BookDto bookDto = new BookDto(Author.of("Kentarou"), Title.of("Berserk"), List.of());
+        BookDto bookDto = new BookDto(Author.of("Kentarou"), Title.of("Berserk"), Set.of(), Set.of());
         BookId bookId = bookService.save(bookDto);
 
         //WHEN
@@ -81,17 +83,17 @@ public class BookServiceUnitTest {
     void shouldUpdateRecordInDatabase() {
 
         //GIVEN
-        BookDto bookDto = new BookDto(Author.of("Ada"), Title.of("Two Piece"), List.of());
+        BookDto bookDto = new BookDto(Author.of("Ada"), Title.of("Two Piece"), Set.of(), Set.of());
 
         BookId bookId = bookService.save(bookDto);
 
         //WHEN
-        BookDto updatedBookDto = new BookDto(Author.of("Oda"), Title.of("One Piece"), List.of());
+        BookDto updatedBookDto = new BookDto(Author.of("Oda"), Title.of("One Piece"), Set.of(), Set.of());
         bookService.update(bookId, updatedBookDto);
 
         //THEN
         Book actualBook = bookService.findExisting(bookId);
-        Book expectedBook = new Book(Author.of("Oda"), Title.of("One Piece"), List.of());
+        Book expectedBook = new Book(Author.of("Oda"), Title.of("One Piece"), Set.of(), Set.of());
         Assertions.assertThat(actualBook.getBookId()).isNotNull();
         Assertions.assertThat(actualBook)
                 .usingRecursiveComparison()
@@ -105,7 +107,7 @@ public class BookServiceUnitTest {
 
         //GIVEN
         ChapterDto chapterDto = new ChapterDto("Prologue", 1);
-        BookDto bookDto = new BookDto(Author.of("Tolkien"), Title.of("Hobbit"), List.of(chapterDto));
+        BookDto bookDto = new BookDto(Author.of("Tolkien"), Title.of("Hobbit"), Set.of(chapterDto), Set.of());
 
         //WHEN
         BookId bookId = bookService.save(bookDto);
@@ -114,17 +116,38 @@ public class BookServiceUnitTest {
         //THEN
         Book book = bookService.findExisting(bookId);
         Chapter chapter = new Chapter("Prologue", 1);
-        Book expectedBook = new Book(Author.of("Tolkien"), Title.of("Hobbit"), List.of(chapter));
+        Book expectedBook = new Book(Author.of("Tolkien"), Title.of("Hobbit"), Set.of(chapter), Set.of());
 
         assertAreEqual(book, expectedBook);
 
 
     }
 
+    @Test
+    void shouldAddPublisherToDatabase() {
+        //GIVEN
+        ChapterDto chapterDto = new ChapterDto("Prologue", 1);
+        PublisherDto publisherDto = new PublisherDto("Shonen Jump");
+        BookDto bookDto = new BookDto(Author.of("Tolkien"), Title.of("Hobbit"), Set.of(), Set.of(publisherDto));
+
+        //WHEN
+        BookId bookId = bookService.save(bookDto);
+
+
+        //THEN
+        Book book = bookService.findExisting(bookId);
+        Chapter chapter = new Chapter("Prologue", 1);
+        Publisher publisher = new Publisher("Shonen Jump", new HashSet<>());
+        Book expectedBook = new Book(Author.of("Tolkien"), Title.of("Hobbit"), Set.of(), Set.of(publisher));
+        publisher.addBook(book);
+        assertAreEqual(book, expectedBook);
+        ;
+    }
+
     private void assertAreEqual(Book actualBook, Book expectedBook) {
         Assertions.assertThat(actualBook)
                 .usingRecursiveComparison()
-                .ignoringFields("id", "chapters.id", "chapters.book")
+                .ignoringFields("id", "chapters.id", "chapters.book", "publishers.id")
                 .ignoringCollectionOrder()
                 .isEqualTo(expectedBook);
     }
