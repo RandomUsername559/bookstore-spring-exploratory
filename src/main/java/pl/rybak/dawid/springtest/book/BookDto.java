@@ -1,4 +1,4 @@
-package pl.rybak.dawid.springtest;
+package pl.rybak.dawid.springtest.book;
 
 import java.util.Set;
 
@@ -6,13 +6,11 @@ public class BookDto {
     private final Author author;
     private final Title title;
     private final Set<ChapterDto> chapterDtoList;
-    private final Set<PublisherDto> publisherDtoSet;
 
-    public BookDto(Author author, Title title, Set<ChapterDto> chapterDtoSet, Set<PublisherDto> publisherDtoSet) {
+    public BookDto(Author author, Title title, Set<ChapterDto> chapterDtoSet) {
         this.author = author;
         this.title = title;
         this.chapterDtoList = chapterDtoSet;
-        this.publisherDtoSet = publisherDtoSet;
     }
 
     public Author getAuthor() {
@@ -26,11 +24,6 @@ public class BookDto {
     public Set<ChapterDto> getChapterDtoSet() {
         return chapterDtoList;
     }
-
-    public Set<PublisherDto> getPublisherDtoSet() {
-        return publisherDtoSet;
-    }
-
 
     @Override
     public String toString() {

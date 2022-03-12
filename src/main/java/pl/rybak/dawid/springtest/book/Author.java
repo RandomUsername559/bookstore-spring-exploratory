@@ -1,4 +1,4 @@
-package pl.rybak.dawid.springtest;
+package pl.rybak.dawid.springtest.book;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;

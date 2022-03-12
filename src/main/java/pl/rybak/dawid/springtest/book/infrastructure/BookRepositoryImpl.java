@@ -1,8 +1,8 @@
-package pl.rybak.dawid.springtest.infrastructure;
+package pl.rybak.dawid.springtest.book.infrastructure;
 
 import org.springframework.stereotype.Repository;
-import pl.rybak.dawid.springtest.Book;
-import pl.rybak.dawid.springtest.BookId;
+import pl.rybak.dawid.springtest.book.Book;
+import pl.rybak.dawid.springtest.book.BookId;
 
 import java.util.List;
 import java.util.Optional;

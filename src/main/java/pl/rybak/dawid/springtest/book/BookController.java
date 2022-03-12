@@ -1,4 +1,4 @@
-package pl.rybak.dawid.springtest;
+package pl.rybak.dawid.springtest.book;
 
 import org.springframework.web.bind.annotation.*;
 

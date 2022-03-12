@@ -1,6 +1,9 @@
-package pl.rybak.dawid.springtest;
+package pl.rybak.dawid.springtest.publisher;
+
+import pl.rybak.dawid.springtest.book.Book;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,14 +24,13 @@ public class Publisher {
             mappedBy = "publishers",
             fetch = FetchType.EAGER
     )
-    private Set<Book> publishedBooks;
+    private Set<Book> publishedBooks = new HashSet<>();
 
     private Publisher() {
     }
 
-    public Publisher(String publisherName, Set<Book> publishedBooks) {
+    public Publisher(String publisherName) {
         this.publisherName = publisherName;
-        this.publishedBooks = publishedBooks;
     }
 
     public Long getId() {
@@ -41,6 +43,10 @@ public class Publisher {
 
     public Set<Book> getPublishedBooks() {
         return publishedBooks;
+    }
+
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
     }
 
     public void addBook(Book book) {

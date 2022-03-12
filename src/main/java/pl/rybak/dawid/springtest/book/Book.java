@@ -1,4 +1,6 @@
-package pl.rybak.dawid.springtest;
+package pl.rybak.dawid.springtest.book;
+
+import pl.rybak.dawid.springtest.publisher.Publisher;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,16 +12,6 @@ import java.util.Set;
 @Table(name = "book")
 public class Book {
 
-    //        @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
-//    @SequenceGenerator(
-//            name = "sequence-generator",
-//            sequenceName = "book_sequence",
-//            allocationSize = 10,
-//            initialValue = 444
-//    )
-//    @Convert(converter = IdConverter.class)
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
     @SequenceGenerator(
@@ -57,12 +49,12 @@ public class Book {
     private Book() {
     }
 
-    public Book(Author author, Title title, Set<Chapter> chapters, Set<Publisher> publishers) {
+    public Book(Author author, Title title, Set<Chapter> chapters) {
         this.author = author;
         this.title = title;
         this.chapters = chapters;
         this.chapters.forEach(chapter -> chapter.setBook(this));
-        this.publishers = publishers;
+
     }
 
     public void setAuthor(Author author) {
@@ -71,6 +63,11 @@ public class Book {
 
     public void setTitle(Title title) {
         this.title = title;
+    }
+
+    public void addPublisher(Publisher publisher) {
+        publishers.add(publisher);
+        publisher.addBook(this);
     }
 
     public BookId getBookId() {

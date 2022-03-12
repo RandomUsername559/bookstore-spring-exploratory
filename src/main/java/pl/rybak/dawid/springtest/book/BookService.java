@@ -1,10 +1,12 @@
-package pl.rybak.dawid.springtest;
+package pl.rybak.dawid.springtest.book;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.rybak.dawid.springtest.infrastructure.BookRepository;
+import pl.rybak.dawid.springtest.book.infrastructure.BookRepository;
+import pl.rybak.dawid.springtest.publisher.Publisher;
+import pl.rybak.dawid.springtest.publisher.PublisherDto;
+import pl.rybak.dawid.springtest.publisher.infrastructure.PublisherRepository;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,9 +15,11 @@ import java.util.stream.Collectors;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     public List<Book> findALl() {
@@ -46,13 +50,17 @@ public class BookService {
         bookRepository.update(book);
     }
 
+    @Transactional
+    public void addPublisher(Long publisherId, BookId bookId) {
+        Book book = bookRepository.findExisting(bookId);
+        Publisher publisher = publisherRepository.findExisting(publisherId);
+        book.addPublisher(publisher);
+    }
+
     private Book createBook(BookDto bookDto) {
-        Set<Publisher> publishers = createPublisher(bookDto.getPublisherDtoSet());
         Book book = new Book(bookDto.getAuthor(), bookDto.getTitle(),
-                createChapters(bookDto.getChapterDtoSet()),
-                publishers
+                createChapters(bookDto.getChapterDtoSet())
         );
-        publishers.forEach(publisher -> publisher.addBook(book));
         return book;
     }
 
@@ -62,9 +70,9 @@ public class BookService {
                 .collect(Collectors.toSet());
     }
 
-    private Set<Publisher> createPublisher(Set<PublisherDto> publisherDtoSet) {
-        return publisherDtoSet.stream()
-                .map(dto -> new Publisher(dto.getPublisherName(), new HashSet<>()))
-                .collect(Collectors.toSet());
+    private Publisher createPublisher(PublisherDto publisherDto) {
+        Publisher publisher = new Publisher(publisherDto.getPublisherName()
+        );
+        return publisher;
     }
 }
