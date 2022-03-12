@@ -7,7 +7,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "Library")
+@Table(name = "book")
 public class Book {
 
     //        @Id
@@ -27,14 +27,13 @@ public class Book {
             sequenceName = "book_sequence",
             allocationSize = 10
     )
-
     private Long id;
+
     @Embedded
     private Author author;
 
     @Embedded
     private Title title;
-
 
     @OneToMany(
             mappedBy = "book",
@@ -43,10 +42,6 @@ public class Book {
             orphanRemoval = true
     )
     private Set<Chapter> chapters = new HashSet<>();
-
-
-    private Book() {
-    }
 
     @ManyToMany(
             cascade = CascadeType.ALL,
@@ -59,6 +54,8 @@ public class Book {
     )
     private Set<Publisher> publishers = new HashSet<>();
 
+    private Book() {
+    }
 
     public Book(Author author, Title title, Set<Chapter> chapters, Set<Publisher> publishers) {
         this.author = author;

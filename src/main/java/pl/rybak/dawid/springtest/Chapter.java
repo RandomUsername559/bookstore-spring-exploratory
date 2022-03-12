@@ -6,12 +6,15 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "book_chapter")
-
-
 public class Chapter {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
+    @SequenceGenerator(
+            name = "sequence-generator",
+            sequenceName = "chapter_sequence",
+            allocationSize = 10
+    )
     private Long id;
     private String chapterName;
     private int page;

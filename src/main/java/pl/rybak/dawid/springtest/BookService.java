@@ -19,20 +19,6 @@ public class BookService {
     }
 
     public List<Book> findALl() {
-//        Book book = bookRepository.findById(444L).orElseThrow();
-//        book.setAaname("One Piece");
-//        bookRepository.save(book);
-//
-//        Book testBook = new Book("My Little Pony", "abc");
-//        Book testBook2 = new Book("Hentai", "abc");
-//        Book testBook3 = new Book("Hentaiii", "abc");
-////        Book deleteMe = new Book("delete","delete");
-//        bookRepository.save(testBook);
-//        bookRepository.save(testBook2);
-//        bookRepository.save(testBook3);
-//        bookRepository.delete(deleteMe);
-
-
         return bookRepository.findAll();
     }
 
@@ -42,8 +28,8 @@ public class BookService {
         return book.getBookId();
     }
 
-    @Transactional
-    public Book findExisting(BookId bookId) {
+
+    public Book find(BookId bookId) {
         return bookRepository.findExisting(bookId);
     }
 

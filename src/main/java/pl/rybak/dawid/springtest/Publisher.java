@@ -5,10 +5,15 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "publishers")
+@Table(name = "publisher")
 public class Publisher {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence-generator")
+    @SequenceGenerator(
+            name = "sequence-generator",
+            sequenceName = "publisher_sequence",
+            allocationSize = 10
+    )
     private Long id;
     private String publisherName;
 
