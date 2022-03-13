@@ -1,40 +1,21 @@
 package pl.rybak.dawid.springtest.book;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
+import pl.rybak.dawid.springtest.AbstractTestIT;
 import pl.rybak.dawid.springtest.publisher.Publisher;
 import pl.rybak.dawid.springtest.publisher.PublisherDto;
 import pl.rybak.dawid.springtest.publisher.PublisherService;
 
-import java.util.List;
 import java.util.Set;
 
-@SpringBootTest
-class BookServiceTestIT {
+
+class BookServiceTestIT extends AbstractTestIT {
     @Autowired
     private BookService bookService;
     @Autowired
     private PublisherService publisherService;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @BeforeEach
-    public void cleanDatabaseEach() {
-
-
-        List<String> tables = jdbcTemplate.queryForList(
-                "SELECT table_name FROM information_schema.tables\n" +
-                        "WHERE table_schema = 'public';", String.class);
-        for (String table : tables) {
-            jdbcTemplate.execute("truncate table " + table + " cascade");
-        }
-
-    }
-
 
     @Test
     void shouldIncreaseSizeOfTotalBooksByAddingBook() {
