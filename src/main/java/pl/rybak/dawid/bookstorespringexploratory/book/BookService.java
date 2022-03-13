@@ -1,11 +1,11 @@
-package pl.rybak.dawid.springtest.book;
+package pl.rybak.dawid.bookstorespringexploratory.book;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.rybak.dawid.springtest.book.infrastructure.BookRepository;
-import pl.rybak.dawid.springtest.publisher.Publisher;
-import pl.rybak.dawid.springtest.publisher.PublisherDto;
-import pl.rybak.dawid.springtest.publisher.infrastructure.PublisherRepository;
+import pl.rybak.dawid.bookstorespringexploratory.book.infrastructure.BookRepository;
+import pl.rybak.dawid.bookstorespringexploratory.publisher.Publisher;
+import pl.rybak.dawid.bookstorespringexploratory.publisher.PublisherDto;
+import pl.rybak.dawid.bookstorespringexploratory.publisher.infrastructure.PublisherRepository;
 
 import java.util.List;
 import java.util.Set;

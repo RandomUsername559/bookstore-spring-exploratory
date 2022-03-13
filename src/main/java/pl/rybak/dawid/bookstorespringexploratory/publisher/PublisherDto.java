@@ -1,4 +1,4 @@
-package pl.rybak.dawid.springtest.publisher;
+package pl.rybak.dawid.bookstorespringexploratory.publisher;
 
 public class PublisherDto {
     private final String publisherName;

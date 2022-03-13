@@ -1,4 +1,4 @@
-package pl.rybak.dawid.springtest.book;
+package pl.rybak.dawid.bookstorespringexploratory.book;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

@@ -1,7 +1,7 @@
-package pl.rybak.dawid.springtest.publisher.infrastructure;
+package pl.rybak.dawid.bookstorespringexploratory.publisher.infrastructure;
 
 import org.springframework.stereotype.Repository;
-import pl.rybak.dawid.springtest.publisher.Publisher;
+import pl.rybak.dawid.bookstorespringexploratory.publisher.Publisher;
 
 import java.util.List;
 import java.util.Optional;

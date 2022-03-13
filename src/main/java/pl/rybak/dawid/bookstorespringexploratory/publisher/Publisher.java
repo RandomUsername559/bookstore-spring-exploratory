@@ -1,6 +1,6 @@
-package pl.rybak.dawid.springtest.publisher;
+package pl.rybak.dawid.bookstorespringexploratory.publisher;
 
-import pl.rybak.dawid.springtest.book.Book;
+import pl.rybak.dawid.bookstorespringexploratory.book.Book;
 
 import javax.persistence.*;
 import java.util.HashSet;

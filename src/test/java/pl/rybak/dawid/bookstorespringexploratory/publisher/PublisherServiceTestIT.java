@@ -1,9 +1,9 @@
-package pl.rybak.dawid.springtest.publisher;
+package pl.rybak.dawid.bookstorespringexploratory.publisher;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.rybak.dawid.springtest.AbstractTestIT;
+import pl.rybak.dawid.bookstorespringexploratory.AbstractTestIT;
 
 
 public class PublisherServiceTestIT extends AbstractTestIT {
